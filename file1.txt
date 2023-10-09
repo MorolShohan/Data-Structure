@@ -1,0 +1,337 @@
+#include <iostream>
+
+using namespace std;
+
+class BST
+{
+
+    struct node
+    {
+        int data;
+        node *left;
+        node *right;
+    };
+
+    node *root;
+
+    node *makeEmpty(node *t)
+    {
+        if (t == NULL)
+            return NULL;
+        {
+            makeEmpty(t->left);
+            makeEmpty(t->right);
+            delete t;
+        }
+        return NULL;
+    }
+
+    node *insert(int x, node *t)
+    {
+        if (t == NULL)
+        {
+            t = new node;
+            t->data = x;
+            t->left = t->right = NULL;
+        }
+        else if (x < t->data)
+            t->left = insert(x, t->left);
+        else if (x > t->data)
+            t->right = insert(x, t->right);
+        return t;
+    }
+
+
+ void search(node *root, int data)
+{
+	int length = 0;
+	node *temp = new node;
+	temp = root;
+
+	while(temp != NULL)
+	{
+
+		if(temp->data == data)
+		{
+			cout<<"\nData found ";
+			return;
+		}
+
+		else if(temp->data > data)
+			temp = temp->left;
+
+		else
+			temp = temp->right;
+
+	    length++;}
+
+	cout<<"\n Data not found";
+	return;
+}
+
+public:
+    BST()
+    {
+        root = NULL;
+    }
+
+    void insert(int x)
+    {
+        root = insert(x, root);
+    }
+
+    void search(int x)
+    {
+        if (root != NULL)
+        {
+            cout << "                                   Element is found" << endl;
+        }
+        else
+        {
+            cout << "                                   Element is not Found" << endl;
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+int binarySearch(int array[], int x, int low, int high)
+{
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        if (array[mid] == x)
+            return mid;
+
+        if (array[mid] < x)
+            low = mid + 1;
+
+        else
+            high = mid - 1;
+    }
+
+    return -1;
+}
+
+
+
+// Linked list
+
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+};
+
+class List
+{
+    Node *head;
+    Node *tail;
+    Node *temp;
+    bool isEmpty()
+    {
+        return head == NULL;
+    }
+
+public:
+    List()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void insert(int x)
+    {
+        temp = new Node;
+        temp->data = x;
+        if (isEmpty())
+        {
+            temp->next = NULL;
+            tail = temp;
+            cout << "Inserted" << endl;
+        }
+        else
+            temp->next = head;
+        head = temp;
+        cout << "Inserted" << endl;
+    }
+
+
+    void LinkedListSearch(int x)
+    {
+        int i;
+        for(i = 1, temp = head; temp->next != NULL && temp->data != x; temp = temp->next, i++);
+        if(temp->data == x)
+        {
+             cout<<"                                   Element is found"<<endl;
+        }
+        else if(temp->next == NULL)
+        {
+             cout<<"                                   Element is not found" << endl;
+        }
+    }
+};
+
+int main()
+{
+    BST t;
+    List l;
+
+    int op;
+    int arr[10];
+    do
+    {
+        cout << " " << endl;
+        cout << "                                 ------------------------------------" << endl;
+        cout << "                                  |     Heres The Options          |" << endl;
+	    cout << "                                 ------------------------------------" << endl;
+	    cout << "";
+        cout << "                                   1.Insert 10 integer numbers" << endl;
+        cout << "                                   2.Construct a Binary Search Tree" << endl;
+        cout << "                                   3.Bubble sorting" << endl;
+        cout << "                                   4.Print The Numbers" << endl;
+        cout << "                                   5.Binary Search" << endl;
+        cout << "                                   6.Construct a Linked List" << endl;
+        cout << "                                   7.Search element in Linked List" << endl;
+        cout << "                                   8.Search element in BST" << endl;
+        cout << " " << endl;
+        cout << " " << endl;
+        cout << "                                        Choose your option:";
+
+        cin >> op;
+
+        switch (op)
+        {
+        case 1:
+        {
+            cout << " " << endl;
+            cout << "                                      Insert value:" << endl;
+            int i = 0;
+            while (i < 10)
+            {
+                cin >> arr[i];
+                i++;
+            }
+        }
+        break;
+
+        case 2:
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                t.insert(arr[i]);
+
+            }
+            cout << " " << endl;
+            cout << "                                         BINARY SEARCH TREE CONSTRUCTED" << endl;
+
+        }
+        break;
+
+        case 3:
+        {
+            int count = 0;
+            int temp;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10 - i - 1; j++)
+                {
+                    count++;
+                    if (arr[j] > arr[j + 1])
+                    {
+                        temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+
+            cout << " " << endl;
+            cout << "                                     Sorted Array is in ascending order :";
+            for (int i = 0; i < 10; i++)
+            {
+                cout << arr[i] << " ";
+            }
+
+            cout << "" << endl;
+            cout << " " << endl;
+        }
+
+        break;
+
+        case 4:
+        {
+
+            int i = 0;
+            while (i < 10)
+            {
+                cout << arr[i] << endl;
+                ;
+                i++;
+            }
+        }
+
+        break;
+        case 5:
+        {
+            int c;
+            cout << "                                           Enter value you want to search: ";
+            cin >> c;
+
+            int result = binarySearch(arr, c, 0, 9);
+            if (result == -1)
+            {
+                cout << "Not found" << endl;
+            }
+            else
+            {
+                cout << "                                      Element is found at index :" << result << endl;
+            }
+        }
+        break;
+        case 6:
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                l.insert(arr[i]);
+            }
+        }
+        break;
+        case 7:{
+            int val2;
+            cout << "                                           SEARCH VALUE :";
+            cin >> val2;
+            l.LinkedListSearch(val2);
+        }
+        break;
+
+        case 8:
+        {
+            int d;
+
+            cout << "                                           Give value to search:";
+            cin >> d;
+
+            t.search(d);
+
+        }
+        break;
+
+        default:
+            break;
+        }
+
+    } while (op != 9);
+
+    return 0;
+}

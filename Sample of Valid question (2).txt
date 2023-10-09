@@ -1,0 +1,92 @@
+1. Display employee id and employee name who manage motorcycle type vehicle
+	Ans:
+select e_id, e_name
+from employee
+where employee.e_id =all(
+select e_id from vehicle
+where m_id =all(
+select m_id
+from vmb where v_type='MOTORCYCLE'
+))
+
+
+
+2. Display riders id, name, birthdate who rides car.
+
+select r_id, r_name,  r_birthdate
+from rider
+where v_number=all(
+select v_number from vehicle
+where m_id =all(
+select m_id
+from vmb where v_type='CAR'
+))
+
+3. Display passenger name who are born after 18-AUG-1997.
+
+SELECT * FROM PASSENGER 
+WHERE P_BIRTHDATE >'18-AUG-1997'
+
+4. Display the employee id, name and their offic id, name and office location for all employees as department location wise.
+
+SELECT EMPLOYEE.E_ID, EMPLOYEE.E_NAME, OFFICE.O_ID, OFFICE.O_NAME, OFFICE.O_ADRESS
+FROM EMPLOYEE, OFFICE
+WHERE EMPLOYEE.O_ID=OFFICE.O_ID
+ORDER BY OFFICE.O_ADRESS ASC
+
+5. Display the rider id, name along with their vehicle type, vehicle model and vehicle brand who ride toyota brand vehicle or vehicle model is Apache.
+
+select rider.r_id, rider.r_name, vmb.v_type, vmb.brand, vmb.model, employee.e_id, EMPLOYEE.e_name
+from rider, vmb, employee,vehicle
+where rider.v_number=vehicle.v_number
+and vehicle.e_id=employee.e_id
+and vmb.brand='TOYOTA'
+
+6. Display the vehicle number, brand and model along their manager id and name where employee works for Obhai.
+
+select vehicle.v_number, vmb.brand, vmb.model, employee.e_id, employee.e_name
+from vehicle, employee, vmb, office
+where vehicle.m_id=vmb.m_id
+and vehicle.e_id=employee.e_id
+and employee.o_id=office.o_id
+and office.o_name='OBHAI'
+
+7. Display the employee id , name and salary who gets salary less then average salary.
+
+select e_id, e_name, e_salary
+from employee
+where e_salary<(select avg(e_salary) from employee)
+
+
+8. Create sequence named sv_id. Increment by 3, Max value 780, starts with 750, cycle, minvalue 707 & no cache.
+
+create sequences sv_id
+start with 750
+increment by 3
+maxvalue 780
+cycle
+minvalue 707
+nocache
+
+9. Set mobile number of the passengers not null unique.
+
+alter table passenger modify (p_phone not null)
+
+10. Create sequence named so_id. Increment by 2, Max value 350, starts with 305, nominvalue, nocycle & no cache.
+
+create sequences so_id
+start with 305
+increment by 2
+maxvalue 350
+nocycle
+nominvalue
+no cache
+
+11. Set employee salary as defult 15000 taka.
+
+alter table employee modify salary default 15000
+
+12. Set employee bonus as default 0 taka.
+
+alter table employee modify bonus default 0
+

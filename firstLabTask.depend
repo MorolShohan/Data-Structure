@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1584205420 source:d:\all codes\d.s\firstlabtask\main.cpp
+	<iostream>
+
+1622606628 source:d:\all codes\d.s\firstlabtask\src\problem1.cpp
+	"problem1.h"
+
+1622606628 d:\all codes\d.s\firstlabtask\include\problem1.h
+
